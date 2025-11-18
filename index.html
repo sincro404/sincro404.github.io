@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" class="light dark">
+
+<head>
+
+ <meta charset="UTF-8">
+ <title>sincronización - Sincro404</title>
+
+ <!-- Resumen para los motores de búsqueda. -->
+ <meta name="description" content="Ejemplo de PWA con Material Design">
+
+ <script src="js/registraServiceWorker.js"></script>
+
+ <meta name="viewport" content="width=device-width">
+
+ <!-- Color de la barra de navegación de Chrome en dispositivos móviles. -->
+ <meta name="theme-color" content="#00a97f">
+
+ <!-- Ícono para la página web, que normalmente se pone en la raíz del sitio.
+  Puede ser diferente para cada página. -->
+ <link rel="icon" sizes="32x32" href="favicon.ico">
+
+ <!-- Configuración de la PWA para Chrome, Edge y Safari.
+  Debe ponerse en todas las páginas. -->
+ <link rel="manifest" href="site.webmanifest">
+
+ <!-- Permite a los navegadores, que como Safari no soportan el estándar
+  completo de custom elementsm, lo cumplan totalmente. Debe ponerse en todas
+  las páginas. -->
+ <script src="ungap/custom-elements.js"></script>
+
+ <!-- Configuración de todas las páginas con JavaSript. -->
+ <script type="module" src="js/configura.js"></script>
+ <link rel="stylesheet" href="css/estilos.css">
+ <link rel="stylesheet" href="css/transicion_pestanas.css">
+
+</head>
+
+<body onload="jugadorConsultaNoEliminados()
+   .then(jugadores => {
+    renderiza(lista, jugadores)
+    sincroniza(lista)
+   })
+   .catch(error => {
+    muestraError(error)
+    esperaUnPocoYSincroniza(lista)
+   })">
+
+ <md-top-app-bar class="center-aligned">
+
+  <h1>Sincronización</h1>
+
+  <button is="md-menu-button" slot="navigation" style="visibility: hidden;"></button>
+
+ </md-top-app-bar>
+
+ <nav-tab-fixed id="tab"></nav-tab-fixed>
+
+ <main>
+    
+    <ul id="lista" class="md-list">
+      <li class="md-two-line icon">
+        <span class="material-symbols-outlined">person</span>
+        <span class="headline">
+          Cargando…
+        </span>
+        <span class="supporting">
+          <progress max="100">Cargando…</progress>
+        </span>
+      </li>
+    </ul>
+
+   <a href="secundaria.html" class="md-fab-primary" title="Agregar" slot="action"
+    style="position: fixed; bottom: 1rem; right: 1rem;">
+   <span class="material-symbols-outlined">add</span>
+  </a> 
+
+  </main>
+
+ <!-- <nav-drw></nav-drw> -->
+<script type="module">
+  import { muestraTextoDeAyuda } from "./lib/js/muestraTextoDeAyuda.js"
+  import { exportaAHtml } from "./lib/js/exportaAHtml.js"
+  import { muestraError } from "./lib/js/muestraError.js"
+  import { submitForm } from "./lib/js/submitForm.js"
+  import { consumeJson } from "./lib/js/consumeJson.js"
+  import { muestraObjeto } from "./lib/js/muestraObjeto.js"
+  import { jugadorConsultaNoEliminados } from "./js/bd/jugadorConsultaNoEliminados.js"
+  import { renderiza } from "./js/renderiza.js"
+  import { sincroniza } from "./js/sincroniza.js"
+  import { esperaUnPocoYSincroniza } from "./js/esperaUnPocoYSincroniza.js"
+ </script>
+
+</body>
+
+</html>

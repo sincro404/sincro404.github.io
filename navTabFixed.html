@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es" class="light dark">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Modifica - Sincro404</title>
+
+  <script src="js/registraServiceWorker.js"></script>
+
+  <meta name="viewport" content="width=device-width">
+  <meta name="theme-color" content="#00a97f">
+  <link rel="icon" sizes="32x32" href="favicon.ico">
+  <link rel="manifest" href="site.webmanifest">
+  <script src="ungap/custom-elements.js"></script>
+
+  <script type="module" src="js/configura.js"></script>
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/transicion_pestanas.css">
+
+
+  <script>
+    // Obtiene los parámetros de la página.
+    const parametros = new URL(location.href).searchParams
+    const paramId = parametros.get("id")
+  </script>
+
+</head>
+
+<body onload="if (paramId !== null) {
+   jugadorBusca(paramId)
+    .then(jugador => {
+     if (jugador === undefined) throw new Error('Jugador no encontrado.')
+     muestraObjeto(forma, { nombre: { value: jugador.JUG_NOMBRE } })
+     muestraObjeto(forma, { equipo: { value: jugador.JUG_EQUIPO } })
+     muestraObjeto(forma, { posicion: { value: jugador.JUG_POSICION } }) 
+    })
+    .catch(muestraError)
+  }">
+
+  <md-top-app-bar class="medium">
+
+    <h1>Modifica</h1>
+
+    <button type="submit" class="md-standard-icon-button" title="Guardar" slot="action" form="forma">
+      <span class="material-symbols-outlined">save</span>
+    </button>
+
+    <button is="md-overflow-button" slot="action" onclick="overflow.alterna(this)"></button>
+
+    <a href="index.html" class="md-menu-button" title="Cancelar" slot="navigation">
+      <span class="material-symbols-outlined">arrow_back</span></a>
+
+
+
+  </md-top-app-bar>
+
+  <main>
+    <form id="forma" onsubmit="
+   event.preventDefault()
+   if (paramId !== null) {
+    const JUG_ID = paramId
+    // Lee el nombre, quitándole los espacios al inicio y al final.
+    const JUG_NOMBRE = forma.nombre.value.trim()
+    const JUG_EQUIPO = forma.equipo.value.trim()
+    const JUG_POSICION = forma.posicion.value.trim()
+    const modelo = { JUG_ID, JUG_NOMBRE, JUG_EQUIPO, JUG_POSICION }
+    jugadorModifica(modelo)
+     .then(json => location.href = 'index.html')
+     .catch(muestraError)
+   }">
+      <p>
+        <label class="md-filled-text-field float">
+          <input placeholder="Nombre*" name="nombre" value="Cargando&hellip;">
+          <span>Nombre *</span>
+        </label>
+      </p>
+      <p>
+        <label class="md-filled-text-field float">
+          <input placeholder="Equipo*" name="equipo" value="Cargando&hellip;">
+          <span>Equipo *</span>
+        </label>
+      </p>
+      <p>
+        <label class="md-filled-text-field float">
+          <input placeholder="Posición*" name="posicion" value="Cargando&hellip;">
+          <span>Posición *</span>
+  </main>
+
+  <md-overflow-menu id="overflow">
+
+    <button type="button" onclick="
+     if (paramId !== null && confirm('Confirma la eliminación')) {
+      jugadorElimina(paramId)
+       .then(() => location.href = 'index.html')
+       .catch(muestraError)
+     }">
+      <span class="material-symbols-outlined">delete</span>
+      Eliminar
+    </button>
+
+  </md-overflow-menu>
+
+  <script type="module">
+    import { muestraTextoDeAyuda } from "./lib/js/muestraTextoDeAyuda.js"
+    import { consumeJson } from "./lib/js/consumeJson.js"
+    import { muestraError } from "./lib/js/muestraError.js"
+    import { muestraObjeto } from "./lib/js/muestraObjeto.js"
+    import { submitForm } from "./lib/js/submitForm.js"
+    import { jugadorBusca } from "./js/bd/jugadorBusca.js"
+    import { jugadorElimina } from "./js/bd/jugadorElimina.js"
+    import { jugadorModifica } from "./js/bd/jugadorModifica.js"
+  </script>
+
+</body>
+
+</html>

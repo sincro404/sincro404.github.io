@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" class="light dark">
+
+<head>
+
+ <meta charset="UTF-8">
+ <title>Agrega - Sincro404</title>
+
+ <script src="js/registraServiceWorker.js"></script>
+
+ <meta name="viewport" content="width=device-width">
+ <meta name="theme-color" content="#00a97f">
+ <link rel="icon" sizes="32x32" href="favicon.ico">
+ <link rel="manifest" href="site.webmanifest">
+ <script src="ungap/custom-elements.js"></script>
+
+ <script type="module" src="js/configura.js"></script>
+ <link rel="stylesheet" href="css/estilos.css">
+ <link rel="stylesheet" href="css/transicion_pestanas.css">
+
+
+
+</head>
+
+<body>
+
+ <md-top-app-bar class="medium">
+
+  <h1>Agrega</h1>
+
+  <a href="index.html" class="md-menu-button" title="Cancelar" slot="navigation">
+   <span class="material-symbols-outlined">arrow_back</span></a>
+   <button type="submit" class="md-standard-icon-button" title="Guardar" slot="action" form="forma">
+   <span class="material-symbols-outlined">save</span>
+  </button>
+
+  <!--<button is="md-menu-button" slot="navigation"></button>
+
+  <button type="button" class="md-standard-icon-button" title="Agregar"
+    slot="action">
+   <span class="material-symbols-outlined">add</span>
+  </button>
+
+  <button type="button" class="md-standard-icon-button" title="Editar"
+    slot="action">
+   <span class="material-symbols-outlined">edit</span>
+  </button>
+
+  <button is="md-overflow-button" slot="action"
+    onclick="overflow.alterna(this)"></button>-->
+
+ </md-top-app-bar>
+
+ <main>
+    <form id="forma" onsubmit="
+   event.preventDefault()
+   // Lee el nombre, quitándole los espacios al inicio y al final.
+   const JUG_NOMBRE = forma.nombre.value.trim()
+   const JUG_EQUIPO = forma.equipo.value.trim()
+   const JUG_POSICION = forma.posicion.value.trim()
+   const modelo = { JUG_NOMBRE, JUG_EQUIPO, JUG_POSICION }
+   jugadorAgrega(modelo)
+    .then(json => location.href = 'index.html')
+    .catch(muestraError)">
+
+    
+
+
+
+  <p>
+   <label class="md-filled-text-field">
+    <input required placeholder="Nombre*" name="nombre">
+    <span>Nombre *</span>
+    <small>Obligatorio</small>
+   </label>
+  </p>
+  <p>
+   <label class="md-filled-text-field">
+    <input required placeholder="Equipo*" name="equipo">
+    <span>Equipo *</span>
+    <small>Obligatorio</small>
+   </label>
+  </p>
+  <p>
+   <label class="md-filled-text-field">
+    <input required placeholder="Posición*" name="posicion">
+    <span>Posición *</span>
+    <small>Obligatorio</small>
+   </label>
+  </p>
+
+ </form>
+
+ </main>
+
+ <script type="module">
+    import { muestraTextoDeAyuda } from "./lib/js/muestraTextoDeAyuda.js"
+    import { exportaAHtml } from "./lib/js/exportaAHtml.js"
+    import { consumeJson } from "./lib/js/consumeJson.js"
+    import { muestraError } from "./lib/js/muestraError.js"
+    import { htmlentities } from "./lib/js/htmlentities.js"
+    import { submitForm } from "./lib/js/submitForm.js"
+    import { jugadorAgrega } from "./js/bd/jugadorAgrega.js"
+
+  </script>
+
+ <!-- <md-overflow-menu id="overflow">
+
+  <button type="button">
+   <span class="material-symbols-outlined">star</span>
+   Marcar favorito
+  </button>
+
+  <button type="button">
+   <span class="material-symbols-outlined"> delete</span>
+   Eliminar
+  </button>
+
+ </md-overflow-menu> -->
+
+<!-- <nav-drw></nav-drw> -->
+
+</body>
+
+</html>
